@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AgendaMVC.Models
 {
-    public class Contato
+    public partial class Contato
     {
      
         [Key]

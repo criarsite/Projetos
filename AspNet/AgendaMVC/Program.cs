@@ -1,4 +1,5 @@
 using AgendaMVC.Models.Data;
+using Auth0.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,14 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<Contexto>(options => {
  options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoBD"));
 });
+
+ builder.Services
+        .AddAuth0WebAppAuthentication(options => {
+            options.Domain = builder.Configuration["Auth0:Domain"];
+            options.ClientId = builder.Configuration["Auth0:ClientId"];
+        });
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -24,7 +33,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",

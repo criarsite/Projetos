@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AgendaMVC.Models;
 using AgendaMVC.Models.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AgendaMVC.Controllers
 {
+   [Authorize]
     public class ContatosController : Controller
     {
         private readonly Contexto _context;
@@ -19,7 +21,9 @@ namespace AgendaMVC.Controllers
             _context = context;
         }
 
+ 
         // GET: Contatos
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
               return _context.Contatos != null ? 
